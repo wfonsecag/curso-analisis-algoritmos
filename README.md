@@ -23,3 +23,7 @@ Las carpetas principales del proyecto tienen un propósito fijo desde el inicio:
 git status
 git log --oneline
 ```
+
+## Entrega
+
+Antes de finalizar la práctica, el repositorio debe estar sincronizado con GitHub y reflejar la misma estructura que la copia local.
