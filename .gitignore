@@ -2,5 +2,5 @@
 .vscode/
 *.pyc
 .pytest_cache/
-ipynb_checkpoints/
+.ipynb_checkpoints/
 Thumbs.db
