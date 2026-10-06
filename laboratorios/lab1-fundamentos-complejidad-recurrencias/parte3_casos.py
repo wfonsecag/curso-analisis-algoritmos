@@ -22,22 +22,47 @@ implementará en el siguiente paso.
 TAMANOS: List[int] = [100, 200, 400, 800, 1600, 3200, 6400]
 RUTA_GRAFICAS = Path(__file__).parent / "graficas"
 
+# Número de repeticiones por tamaño/escenario para promediar mediciones
+REPETICIONES: int = 5
+
 
 def medir_insertion(datos: List[int]) -> Tuple[float, int]:
-    """Mide el tiempo de ejecución de `insertion_sort` sobre `datos`.
+    """Mide una única ejecución de `insertion_sort` sobre `datos`.
 
-    Args:
-        datos: Lista de enteros de entrada para la medición.
-
-    Returns:
-        Tupla `(tiempo_segundos, comparaciones)` donde `comparaciones` es el
-        número de comparaciones entre elementos reportado por el algoritmo.
+    Esta función ejecuta el algoritmo una vez y devuelve el tiempo y el
+    número de comparaciones reportado.
     """
     inicio = time.perf_counter()
     _, comparaciones = insertion_sort(datos)
     fin = time.perf_counter()
 
     return fin - inicio, comparaciones
+
+
+def medir_promediado(datos: List[int], repeticiones: int = REPETICIONES) -> Tuple[float, float]:
+    """Ejecuta `medir_insertion` repetidas veces y devuelve el promedio.
+
+    Args:
+        datos: Lista de entrada para la medición (la función no la modifica).
+        repeticiones: Número de ejecuciones a promediar.
+
+    Returns:
+        `(tiempo_promedio, comparaciones_promedio)` — ambos como `float`.
+    """
+    tiempos: List[float] = []
+    comparaciones_list: List[int] = []
+
+    for _ in range(repeticiones):
+        # Pasamos una copia a la medición para garantizar que cada ejecución
+        # parte del mismo estado de entrada.
+        tiempo, comparaciones = medir_insertion(datos.copy())
+        tiempos.append(tiempo)
+        comparaciones_list.append(comparaciones)
+
+    tiempo_promedio = sum(tiempos) / len(tiempos)
+    comparaciones_promedio = sum(comparaciones_list) / len(comparaciones_list)
+
+    return tiempo_promedio, comparaciones_promedio
 
 
 def ejecutar_experimento() -> Dict[str, Dict[str, List[float]]]:
@@ -64,15 +89,17 @@ def ejecutar_experimento() -> Dict[str, Dict[str, List[float]]]:
         }
 
         for nombre, datos in escenarios.items():
-            tiempo, comparaciones = medir_insertion(datos)
+            # Medimos varias repeticiones y promediamos para obtener valores
+            # más estables frente a ruido de ejecución.
+            tiempo, comparaciones = medir_promediado(datos, repeticiones=REPETICIONES)
 
             resultados[nombre]["tiempos"].append(tiempo)
             resultados[nombre]["comparaciones"].append(comparaciones)
 
             print(
                 f"n={n} | {nombre} | "
-                f"tiempo={tiempo:.6f} s | "
-                f"comparaciones={comparaciones}"
+                f"tiempo_promedio={tiempo:.6f} s | "
+                f"comparaciones_promedio={comparaciones:.1f}"
             )
 
     return resultados
