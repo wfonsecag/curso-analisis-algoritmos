@@ -1,13 +1,16 @@
 def insertion_sort(datos: list[int]) -> tuple[list[int], int]:
-    """
-    Ordena una lista de enteros de forma descendente mediante Insertion Sort.
+    """Ordena una lista en orden descendente usando Insertion Sort.
+
+    La función NO modifica la lista de entrada: trabaja sobre una copia y
+    devuelve una nueva lista ordenada junto con el número de comparaciones
+    realizadas entre elementos.
 
     Args:
         datos: Lista de enteros que se desea ordenar.
 
     Returns:
-        Una tupla con la lista ordenada y el número de comparaciones
-        realizadas entre elementos.
+        Tuple donde el primer elemento es la lista ordenada (nueva lista) y
+        el segundo elemento es el número de comparaciones realizadas.
     """
     datos_ordenados = datos.copy()
     comparaciones = 0
@@ -31,15 +34,18 @@ def insertion_sort(datos: list[int]) -> tuple[list[int], int]:
 
 
 def merge_sort(datos: list[int]) -> tuple[list[int], int]:
-    """
-    Ordena una lista de enteros de forma descendente mediante Merge Sort.
+    """Ordena una lista en orden descendente usando Merge Sort.
+
+    La función trabaja conceptualmente sobre una copia de los subarreglos y
+    devuelve una nueva lista ordenada y el número de comparaciones entre
+    elementos realizadas durante el proceso.
 
     Args:
         datos: Lista de enteros que se desea ordenar.
 
     Returns:
-        Una tupla con la lista ordenada y el número de comparaciones
-        realizadas entre elementos.
+        Tuple donde el primer elemento es la lista ordenada (nueva lista) y
+        el segundo elemento es el número de comparaciones realizadas.
     """
     if len(datos) <= 1:
         return datos.copy(), 0
@@ -63,20 +69,16 @@ def merge_sort(datos: list[int]) -> tuple[list[int], int]:
     return resultado, comparaciones_totales
 
 
-def merge(
-    izquierda: list[int],
-    derecha: list[int]
-) -> tuple[list[int], int]:
-    """
-    Combina dos listas ordenadas de forma descendente.
+def merge(izquierda: list[int], derecha: list[int]) -> tuple[list[int], int]:
+    """Combina dos listas ordenadas (descendente) y cuenta comparaciones.
 
     Args:
-        izquierda: Primera lista ordenada.
-        derecha: Segunda lista ordenada.
+        izquierda: Primera lista ordenada (descendente).
+        derecha: Segunda lista ordenada (descendente).
 
     Returns:
-        Una tupla con la lista combinada y el número de comparaciones
-        realizadas entre elementos.
+        Tuple con la lista combinada (descendente) y el número de comparaciones
+        realizadas durante la fusión.
     """
     resultado = []
     i = 0
