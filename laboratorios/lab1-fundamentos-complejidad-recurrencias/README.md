@@ -1,6 +1,6 @@
 # Laboratorio evaluativo 01 — Fundamentos, complejidad y recurrencias
 
-**Estudiante:** Wilmar Fonseca
+**Estudiante:** Wilmar Fonseca García
 
 ## Reproducción del laboratorio
 
@@ -49,7 +49,7 @@ La eficiencia debe analizarse teniendo en cuenta el recurso que se consume y la 
 
 Duplicar la velocidad del servidor puede disminuir el tiempo de ejecución, pero no cambia la forma en que crece el número de operaciones del algoritmo. Insertion Sort tiene un comportamiento cuadrático en sus casos desfavorables, por lo que cuando aumenta mucho la cantidad de registros el número de operaciones crece rápidamente. Por esta razón, aumentar solamente la velocidad del hardware no soluciona la causa principal del problema.
 
-Un ejemplo diferente sería un sistema de inventario tecnológico que tenga que ordenar aproximadamente 100.000 equipos para generar reportes y asignaciones. Si el algoritmo utilizado requiere una cantidad de operaciones que crece cuadráticamente, el proceso puede tardar demasiado y superar la ventana disponible para generar el reporte antes del inicio de la jornada laboral. El algoritmo puede ser correcto y entregar los datos ordenados, pero no cumplir la restricción de tiempo del proceso.
+Un ejemplo más concreto sería un sistema de inventario tecnológico que debe ordenar aproximadamente 100.000 equipos para generar reportes y asignaciones antes del inicio del turno. Si la restricción operativa exige, por ejemplo, que el reporte se genere en menos de 2 minutos, la diferencia en la complejidad puede ser determinante: extrapolando desde la medición registrada en este laboratorio para 6.400 registros (≈1,05 s) y asumiendo crecimiento cuadrático, el tiempo estimado para 100.000 registros sería del orden de minutos (≈4,3 min), por lo que no cumpliría una ventana estricta de 2 minutos. El punto es que hay que comparar el crecimiento teórico del algoritmo con la restricción concreta del proceso (qué se procesa, cuántos datos y cuánto tiempo disponible) antes de comprar hardware.
 
 Por esto, antes de invertir en hardware es necesario analizar el comportamiento del algoritmo y determinar si su crecimiento permite cumplir la restricción de cuatro horas con el volumen actual y futuro de datos.
 
@@ -57,7 +57,7 @@ Por esto, antes de invertir en hardware es necesario analizar el comportamiento 
 
 # Parte 2 — Responsabilidad ambiental y ética de la implementación
 
-El tiempo de ejecución de un algoritmo también tiene una relación con el consumo de recursos. Una ejecución que necesita más tiempo mantiene el servidor trabajando durante más tiempo y, por lo tanto, puede aumentar el consumo de energía. En Tamiza el proceso se ejecuta durante la noche y debe repetirse de manera frecuente. Si el algoritmo mantiene un comportamiento costoso durante años, el impacto no corresponde solamente a una ejecución, sino a la acumulación de muchas ejecuciones.
+El tiempo de ejecución de un algoritmo también tiene una relación directa con el consumo de recursos. Una ejecución que necesita más tiempo mantiene el servidor trabajando durante más tiempo y, por lo tanto, puede aumentar el consumo de energía. En Tamiza el proceso se ejecuta durante la noche y debe repetirse de manera frecuente. Si el algoritmo mantiene un comportamiento costoso durante años, el impacto no corresponde solamente a una ejecución, sino a la acumulación de muchas ejecuciones. Por ejemplo, una ejecución nocturna que ocupe 4 horas por noche equivale a `4 h × 365 = 1.460 horas` de servidor al año; ese volumen ya es significativo para el consumo energético y el coste operativo.
 
 La decisión también tiene una responsabilidad ética porque los registros representan personas que esperan ser contactadas de acuerdo con su nivel de riesgo.
 
