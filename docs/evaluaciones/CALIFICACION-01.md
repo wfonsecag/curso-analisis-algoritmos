@@ -9,11 +9,11 @@
 |---|---|
 | Corrección conceptual | 21 / 25 |
 | Calidad de la explicación teórica | 19 / 25 |
-| Corrección de la implementación | 14 / 20 |
+| Corrección de la implementación | 15 / 20 |
 | Calidad del análisis de las gráficas | 15 / 20 |
 | Documentación y organización del informe | 5 / 10 |
-| **Total** | **74 / 100** |
-| **Nota (0–5)** | **3.70** |
+| **Total** | **75 / 100** |
+| **Nota (0–5)** | **3.75** |
 
 ## 1. Corrección conceptual (21 / 25)
 **Lo que hizo bien:**
@@ -39,7 +39,7 @@
 - Falta la complejidad de merge sort en mejor, peor y promedio dentro de la tabla.
 - La verificación del método maestro es muy breve; conviene escribir la comparación y la conclusión con más detalle.
 
-## 3. Corrección de la implementación (14 / 20)
+## 3. Corrección de la implementación (15 / 20)
 **Lo que hizo bien:**
 - `insertion_sort` y `merge_sort` ordenan bien, no cambian la lista recibida, cuentan comparaciones entre elementos y no usan `sorted()` ni `sort()`.
 - Los tres generadores entregan listas del tamaño pedido, sin repetidos, con semilla.
@@ -48,7 +48,6 @@
 **Lo que puede mejorar:**
 - Los generadores y las funciones de `parte3_casos.py` y `parte4_complejidad.py` no tienen docstring, y algunas faltan de anotaciones de tipos.
 - Los docstrings de los algoritmos no siguen el texto pedido (por ejemplo, no dicen que trabajan sobre una copia).
-- Los cuatro archivos terminan sin salto de línea final.
 - Cada tiempo se mide una sola vez; repetir y promediar daría curvas más estables.
 
 ## 4. Calidad del análisis de las gráficas (15 / 20)
