@@ -69,9 +69,13 @@ También existe un costo para la Secretaría de Salud. Si el proceso falla de ma
 
 Finalmente, el equipo de desarrollo también asume un costo cuando una solución que ya no escala obliga a realizar correcciones urgentes o mantener una implementación que no responde al crecimiento de los datos.
 
-Existe además una responsabilidad sobre el orden de la lista. No se trata solamente de obtener una lista ordenada, porque el orden determina quién será llamado primero. En este escenario, una decisión técnica sobre el algoritmo puede influir directamente en la prioridad con la que las personas reciben el contacto.
+Existe además una responsabilidad sobre el orden de la lista. No se trata solamente de obtener una lista ordenada, porque el orden determina quién será llamado primero y, por tanto, la prioridad de atención. En producción no basta con que el proceso termine a tiempo: también hay que garantizar que el orden refleje correctamente la prioridad. Esto exige controles adicionales, por ejemplo:
 
-Por esta razón, la selección del algoritmo debe considerar el tiempo, el consumo de recursos, la confiabilidad del proceso y las consecuencias que puede tener una ejecución incompleta o incorrecta.
+- Pruebas unitarias y de integración que verifiquen que la prioridad está preservada en distintos tamaños y disposiciones de entrada.
+- Validación por muestreo y auditoría periódica para detectar desviaciones en el orden.
+- Registros de trazabilidad que permitan reproducir y verificar resultados ante incidencias.
+
+Por esta razón, la selección del algoritmo debe considerar el tiempo, el consumo de recursos, la confiabilidad del proceso y las obligaciones de validación y auditoría que impone la correcta priorización.
 
 ---
 
@@ -87,7 +91,7 @@ Para un tamaño fijo `n`, el **peor caso** corresponde al conjunto de entradas q
 
 El **mejor caso** corresponde al conjunto de entradas del mismo tamaño `n` que produce el menor costo de ejecución.
 
-El **caso promedio** representa el comportamiento esperado considerando las entradas posibles del mismo tamaño bajo una distribución determinada.
+El **caso promedio** representa el comportamiento esperado calculado sobre el conjunto de todas las permutaciones de `n` elementos, asumiendo una distribución uniforme entre esas permutaciones. En la práctica experimental usamos el escenario aleatorio como aproximación de este comportamiento promedio.
 
 Para Tamiza no se debe seleccionar el algoritmo pensando únicamente en el mejor caso. Como la ventana de procesamiento es estricta y el proceso debe terminar antes de las 6:00 a. m., se debe considerar un comportamiento que permita responder correctamente incluso cuando la entrada sea desfavorable.
 
@@ -195,60 +199,29 @@ Por lo tanto:
 
 Así, Merge Sort tiene un crecimiento `Θ(n log n)` en sus casos de entrada.
 
-### Análisis manual de Insertion Sort
+### Análisis detallado de Insertion Sort (ligado al código)
 
-Para analizar Insertion Sort se consideran las principales operaciones realizadas por el algoritmo y la cantidad de veces que pueden ejecutarse.
+La implementación utilizada realiza una copia de la lista y trabaja sobre esa copia. Si llamamos `a` a la lista de entrada y `a_copy` a la copia que manipula el algoritmo, el flujo principal es:
 
-| Operación                      | Cantidad aproximada de ejecuciones en el peor caso |       Costo |
-| ------------------------------ | -------------------------------------------------: | ----------: |
-| Copia de la lista              |                                                `n` |       `c₁n` |
-| Inicialización del ciclo `for` |                                            `n - 1` | `c₂(n - 1)` |
-| Asignación de `clave`          |                                            `n - 1` | `c₃(n - 1)` |
-| Asignación de `j`              |                                            `n - 1` | `c₄(n - 1)` |
-| Comparación del `while`        |                                 hasta `n(n - 1)/2` |      `c₅n²` |
-| Movimiento de elementos        |                                 hasta `n(n - 1)/2` |      `c₆n²` |
-| Disminución de `j`             |                                 hasta `n(n - 1)/2` |      `c₇n²` |
-| Asignación final de `clave`    |                                            `n - 1` | `c₈(n - 1)` |
+1. `for i in range(1, n)`: el ciclo externo se ejecuta `n - 1` veces.
+2. `clave = a_copy[i]`: asignación de la clave — `n - 1` veces.
+3. `j = i - 1`: inicialización de `j` — `n - 1` veces.
+4. `while j >= 0 and a_copy[j] > clave`: cada iteración del `while` genera una comparación entre elementos; en el peor caso el número total de comparaciones del `while` sobre todos los `i` es `1 + 2 + ... + (n - 1) = n(n - 1)/2`.
+5. Dentro del `while`, el desplazamiento se realiza con `a_copy[j + 1] = a_copy[j]`: en el peor caso también puede ocurrir hasta `n(n - 1)/2` movimientos.
+6. Al salir del `while`, se hace `a_copy[j + 1] = clave`: una asignación final por iteración del `for` (`n - 1` veces).
 
-En el peor caso, cada nuevo elemento debe compararse con todos los elementos que ya se encuentran en la parte ordenada. Por eso aparece la suma:
-
-`1 + 2 + 3 + ... + (n - 1)`
-
-La suma de los primeros `n - 1` números es:
-
-`n(n - 1) / 2`
-
-Al desarrollar:
-
-`(n² - n) / 2`
-
-Por lo tanto, las operaciones que dependen de esta suma crecen proporcionalmente a `n²`.
-
-La suma general de los costos puede representarse como:
-
-`T(n) = c₁n + c₂(n - 1) + c₃(n - 1) + c₄(n - 1) + c₅n² + c₆n² + c₇n² + c₈(n - 1)`
-
-Los términos lineales y constantes tienen menor crecimiento que los términos cuadráticos. Por eso, al conservar el término dominante:
+Resumiendo los costos (peor caso): el ciclo `for` y las asignaciones lineales aportan términos Θ(n), mientras que las comparaciones y desplazamientos del `while` aportan Θ(n²). Conservando el término dominante:
 
 `T(n) = Θ(n²)`
 
-En el mejor caso, cuando los datos ya están ordenados en el sentido requerido, el ciclo interno realiza aproximadamente una comparación por elemento y no necesita desplazar los elementos.
+En el mejor caso (lista ya ordenada) el `while` realiza aproximadamente una comparación por elemento y no hay desplazamientos, por lo que `T(n) = Θ(n)`. El caso promedio, tomando la media sobre permutaciones aleatorias, mantiene `T(n) = Θ(n²)`.
 
-En ese caso el número de operaciones crece proporcionalmente a `n`, por lo que:
+### Comparación de complejidades (resumen)
 
-`T(n) = Θ(n)`
-
-El caso promedio mantiene un crecimiento cuadrático:
-
-`T(n) = Θ(n²)`
-
-Por tanto, la complejidad de Insertion Sort queda:
-
-| Caso          | Complejidad |
-| ------------- | ----------: |
-| Mejor caso    |      `Θ(n)` |
-| Caso promedio |     `Θ(n²)` |
-| Peor caso     |     `Θ(n²)` |
+| Algoritmo      | Mejor        | Promedio     | Peor         |
+| -------------- | ------------:| ------------:| ------------:|
+| Insertion Sort | `Θ(n)`       | `Θ(n²)`      | `Θ(n²)`      |
+| Merge Sort     | `Θ(n log n)` | `Θ(n log n)` | `Θ(n log n)` |
 
 ---
 
