@@ -229,18 +229,18 @@ En el mejor caso (lista ya ordenada) el `while` realiza aproximadamente una comp
 
 Se compararon Insertion Sort y Merge Sort utilizando el escenario A, con los mismos tamaños empleados en la Parte 3.
 
-Los tiempos se midieron utilizando `time.perf_counter()`.
+Los tiempos se midieron utilizando `time.perf_counter()` y cada medición corresponde al promedio de 5 repeticiones para reducir el ruido experimental.
 
 ![Comparación de tiempo entre Insertion Sort y Merge Sort](graficas/parte4_tiempo.png)
 
 A medida que aumenta `n`, la diferencia entre los dos algoritmos se hace cada vez mayor.
 
-Para `n = 6400`, los resultados de la última medición fueron:
+Para `n = 6400`, los resultados promediados fueron:
 
-* Insertion Sort: `1,052141 segundos`
-* Merge Sort: `0,020916 segundos`
+- Insertion Sort (promedio 5 repeticiones): `2.515812 segundos`
+- Merge Sort (promedio 5 repeticiones): `0.028995 segundos`
 
-En esta medición, Merge Sort fue aproximadamente **50 veces más rápido** que Insertion Sort.
+En esta medición, Merge Sort fue aproximadamente **86.8 veces más rápido** que Insertion Sort.
 
 La curva de Insertion Sort crece mucho más rápidamente a medida que aumenta el tamaño de entrada, mientras que Merge Sort mantiene un crecimiento considerablemente menor.
 
@@ -259,13 +259,23 @@ Se recomienda reemplazar Insertion Sort por Merge Sort para el proceso nocturno 
 
 El criterio principal de selección debe ser el comportamiento del algoritmo cuando cambia el tipo de entrada. La plataforma recibe información de diferentes fuentes y el orden de los datos puede cambiar sin previo aviso. Por esta razón, no resulta conveniente mantener tres implementaciones diferentes dependiendo de si los datos llegan aleatorios, casi ordenados o en orden inverso. Se recomienda utilizar un algoritmo cuyo comportamiento tenga un crecimiento más controlado frente a estos cambios.
 
-Las mediciones realizadas muestran una diferencia importante. Con 6.400 registros del escenario A, Insertion Sort tardó `1,052141 segundos`, mientras que Merge Sort tardó `0,020916 segundos`. Esto significa que, en esta medición, Merge Sort fue aproximadamente 50 veces más rápido.
+Las mediciones realizadas muestran una diferencia importante. Con 6.400 registros del escenario A (promedio de 5 repeticiones), Insertion Sort tardó `2.515812 segundos`, mientras que Merge Sort tardó `0.028995 segundos`. En esta medición, Merge Sort fue aproximadamente 86.8 veces más rápido.
 
-Para estimar el comportamiento con los 1.200.000 registros de producción se utiliza como referencia la medición de 6.400 registros y el crecimiento teórico de cada algoritmo. Para Insertion Sort, considerando un crecimiento cuadrático, se obtiene una estimación de aproximadamente `36.989 segundos`, equivalentes a **10,27 horas**. Esta cifra es una extrapolación y no una medición directa con 1.200.000 registros. Incluso considerando únicamente una entrada aleatoria, la estimación supera ampliamente la ventana disponible de cuatro horas.
+Para estimar el comportamiento con los 1.200.000 registros de producción se utiliza como referencia la medición de 6.400 registros y el crecimiento teórico de cada algoritmo. Extrapolando:
 
-Para Merge Sort, utilizando como referencia los `0,020916 segundos` obtenidos con 6.400 registros y considerando un crecimiento `n log n`, la estimación para 1.200.000 registros es de aproximadamente **6,26 segundos**. Esta cifra también corresponde a una extrapolación y no a una medición directa sobre el volumen de producción.
+- Para Insertion Sort (crecimiento Θ(n²)):
 
-Estos resultados muestran que duplicar la velocidad del servidor no soluciona la causa principal. La última medición muestra que Insertion Sort necesita `1,052141 segundos` para 6.400 registros, mientras que Merge Sort necesita solamente `0,020916 segundos`. Aunque un servidor más rápido reduzca parte de estos tiempos, Insertion Sort mantiene un crecimiento cuadrático y la cantidad de datos de producción es mucho mayor.
+	ratio = (1.200.000 / 6.400)² ≈ 35_156.25
+
+	tiempo ≈ 2.515812 × 35_156.25 ≈ 88_446 segundos ≈ **24.57 horas** (aproximación; no es una medición directa).
+
+- Para Merge Sort (crecimiento Θ(n log n)):
+
+	ratio = (1.200.000 × log₂(1.200.000)) / (6.400 × log₂(6.400)) ≈ 299.5
+
+	tiempo ≈ 0.028995 × 299.5 ≈ **8.68 segundos** (aproximación; no es una medición directa).
+
+Estas estimaciones muestran que duplicar la velocidad del servidor no soluciona la causa principal: Insertion Sort mantiene un crecimiento cuadrático que, al extrapolarse al volumen de producción, puede superar ampliamente la ventana de cuatro horas.
 
 Además del tiempo, se debe considerar el mantenimiento de la solución. Merge Sort requiere memoria adicional para realizar las divisiones y combinaciones de los datos. Sin embargo, este costo debe compararse con el riesgo operativo de depender de que el escenario B continúe siendo casi ordenado. Si en algún momento cambia la forma de entrada y los datos llegan en un orden desfavorable, Insertion Sort puede aumentar considerablemente su tiempo de procesamiento.
 
