@@ -191,13 +191,19 @@ Calculamos:
 
 Por lo tanto:
 
+`n^(log₂ b) = n^(log₂ 2) = n`
+
+y, como:
+
 `f(n) = Θ(n)`
 
-y:
+se obtiene directamente que:
 
-`f(n) = Θ(n^(log₂ 2))`
+`f(n) = Θ(n^(log₂ b))`
 
-Se cumple la condición correspondiente al caso en el que `f(n)` tiene el mismo orden que `n^(log₂ b)`.
+Es decir, `f(n)` y `n^(log₂ b)` tienen el mismo orden de crecimiento.
+
+Se cumple entonces la condición del caso 2 del Teorema Maestro.
 
 Por lo tanto:
 
@@ -254,6 +260,8 @@ La conclusión experimental coincide con el análisis teórico. Insertion Sort p
 
 En los tamaños utilizados en esta prueba, Merge Sort presentó un mejor tiempo de ejecución que Insertion Sort, aunque en tamaños muy pequeños la diferencia puede ser reducida debido al costo adicional de la recursividad y la combinación de datos.
 
+La diferencia entre ambos algoritmos puede verse en la gráfica [graficas/parte4_tiempo.png](laboratorios/lab1-fundamentos-complejidad-recurrencias/graficas/parte4_tiempo.png), donde para tamaños pequeños las curvas están más cerca y la separación se vuelve más visible a medida que `n` crece.
+
 ---
 
 # 4.3 — Concepto técnico a la Secretaría de Salud
@@ -265,7 +273,7 @@ Se recomienda reemplazar Insertion Sort por Merge Sort para el proceso nocturno 
 
 El criterio principal de selección debe ser el comportamiento del algoritmo cuando cambia el tipo de entrada. La plataforma recibe información de diferentes fuentes y el orden de los datos puede cambiar sin previo aviso. Por esta razón, no resulta conveniente mantener tres implementaciones diferentes dependiendo de si los datos llegan aleatorios, casi ordenados o en orden inverso. Se recomienda utilizar un algoritmo cuyo comportamiento tenga un crecimiento más controlado frente a estos cambios.
 
-Las mediciones realizadas muestran una diferencia importante. Con 6.400 registros del escenario A (promedio de 5 repeticiones), Insertion Sort tardó `2.515812 segundos`, mientras que Merge Sort tardó `0.028995 segundos`. En esta medición, Merge Sort fue aproximadamente 86.8 veces más rápido.
+Las mediciones realizadas muestran una diferencia importante. Con 6.400 registros del escenario A (promedio de 5 repeticiones), Insertion Sort tardó `2.515812 segundos`, mientras que Merge Sort tardó `0.028995 segundos`. En esta medición, Merge Sort fue aproximadamente 86.8 veces más rápido. Estos valores provienen de la misma corrida que generó la gráfica [graficas/parte4_tiempo.png](laboratorios/lab1-fundamentos-complejidad-recurrencias/graficas/parte4_tiempo.png).
 
 Para estimar el comportamiento con los 1.200.000 registros de producción se utiliza como referencia la medición de 6.400 registros y el crecimiento teórico de cada algoritmo. Extrapolando:
 
