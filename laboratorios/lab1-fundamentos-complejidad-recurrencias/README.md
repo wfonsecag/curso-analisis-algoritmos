@@ -14,6 +14,12 @@ Desde la raíz del repositorio:
 .venv\Scripts\activate
 ```
 
+En macOS o Linux:
+
+```bash
+source .venv/bin/activate
+```
+
 ### Ejecutar Parte 3
 
 ```bash

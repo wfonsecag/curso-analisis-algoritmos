@@ -34,8 +34,9 @@ def generar_aleatorio(n: int, semilla: int = 42) -> List[int]:
 def generar_casi_ordenado(n: int, semilla: int = 42) -> List[int]:
     """Genera una lista casi ordenada.
 
-    Construye una lista donde el 98% de los primeros elementos están en orden
-    ascendente y el 2% final contiene nuevos registros mezclados (con semilla).
+    Construye una lista donde el 98% de los primeros elementos están en el orden
+    que espera `insertion_sort` (descendente) y el 2% final contiene nuevos
+    registros mezclados (con semilla).
 
     Args:
         n: Tamaño de la lista a generar.
@@ -47,7 +48,7 @@ def generar_casi_ordenado(n: int, semilla: int = 42) -> List[int]:
     cantidad_ordenada = int(n * 0.98)
     cantidad_nueva = n - cantidad_ordenada
 
-    datos_ordenados = list(range(1, cantidad_ordenada + 1))
+    datos_ordenados = list(range(cantidad_ordenada, 0, -1))
 
     # Generar nuevos valores distintos y mezclarlos
     datos_nuevos = list(range(cantidad_ordenada + 1, cantidad_ordenada + cantidad_nueva + 1))
@@ -59,12 +60,12 @@ def generar_casi_ordenado(n: int, semilla: int = 42) -> List[int]:
 
 
 def generar_inverso(n: int) -> List[int]:
-    """Genera la lista 1..n en orden inverso (mayor a menor).
+    """Genera la lista 1..n en el orden opuesto al que espera `insertion_sort`.
 
     Args:
         n: Tamaño de la lista a generar.
 
     Returns:
-        Lista de enteros en orden inverso.
+        Lista de enteros en orden ascendente.
     """
-    return list(range(n, 0, -1))
+    return list(range(1, n + 1))
