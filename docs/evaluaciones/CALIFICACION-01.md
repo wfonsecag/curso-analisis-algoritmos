@@ -10,10 +10,10 @@
 | Corrección conceptual | 21 / 25 |
 | Calidad de la explicación teórica | 19 / 25 |
 | Corrección de la implementación | 15 / 20 |
-| Calidad del análisis de las gráficas | 15 / 20 |
+| Calidad del análisis de las gráficas | 16 / 20 |
 | Documentación y organización del informe | 5 / 10 |
-| **Total** | **75 / 100** |
-| **Nota (0–5)** | **3.75** |
+| **Total** | **76 / 100** |
+| **Nota (0–5)** | **3.80** |
 
 ## 1. Corrección conceptual (21 / 25)
 **Lo que hizo bien:**
@@ -50,14 +50,13 @@
 - Los docstrings de los algoritmos no siguen el texto pedido (por ejemplo, no dicen que trabajan sobre una copia).
 - Cada tiempo se mide una sola vez; repetir y promediar daría curvas más estables.
 
-## 4. Calidad del análisis de las gráficas (15 / 20)
+## 4. Calidad del análisis de las gráficas (16 / 20)
 **Lo que hizo bien:**
 - Las tres gráficas existen, tienen título, ejes rotulados y leyenda, y se ven en el informe.
 - Identifica con cifras que el inverso es el peor caso, el aleatorio el intermedio y el casi ordenado el mejor.
 - Contrasta bien la conclusión con la complejidad teórica y hace la extrapolación a 1.200.000 registros declarándola como estimación.
 
 **Lo que puede mejorar:**
-- Los números del informe para la Parte 4 (1,05 s para insertion sort) no coinciden con la gráfica publicada, donde se ve cerca de 0,6 s. Debe usar los datos de la misma corrida que la gráfica.
 - El informe dice que a tamaños pequeños la diferencia es menor, pero no lo comprueba en su gráfica.
 - El concepto técnico no cita la gráfica ni el tamaño de entrada del que sale el dato, y la justificación de elegir una sola implementación es breve.
 
@@ -77,6 +76,5 @@ Sí. Los scripts corren sin errores, ordenan correctamente los tres escenarios y
 ## Para el próximo laboratorio
 - Haga commits pequeños y frecuentes mientras avanza, con mensajes que digan qué cambió.
 - Escriba docstring y tipos en todas las funciones, también en los generadores y los scripts de medición.
-- Antes de entregar, revise que los números del informe salgan de la misma corrida que las gráficas.
 - Analice insertion sort línea por línea sobre su propio código e incluya merge sort en la tabla de complejidades.
 - Dé datos concretos en los ejemplos propios (qué se procesa, cuántos datos, qué límite de tiempo) y cite la gráfica que respalda cada afirmación.
