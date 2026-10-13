@@ -1,7 +1,9 @@
-# Retroalimentación — Laboratorio 01: Fundamentos, complejidad y recurrencias
+# Retroalimentación — Fundamentos, complejidad y recurrencias
 
-**Estudiante:** Wilmar Fonseca García · **Laboratorio:** Fundamentos, complejidad y recurrencias (Tamiza)
-**Fecha límite:** 2026-10-04 23:59 · **Versión revisada:** commit `28f4c69`
+**Estudiante:** Wilmar Fonseca García · **Laboratorio:** Laboratorio evaluativo 01 — Fundamentos, complejidad y recurrencias
+**Fecha límite:** 2026-10-13 23:59 · **Versión revisada:** commit `23e5ee8`
+
+Muy buen trabajo, completo y ordenado.
 
 ## Nota
 
@@ -9,72 +11,74 @@
 |---|---|
 | Corrección conceptual | 21 / 25 |
 | Calidad de la explicación teórica | 19 / 25 |
-| Corrección de la implementación | 15 / 20 |
+| Corrección de la implementación | 16 / 20 |
 | Calidad del análisis de las gráficas | 16 / 20 |
-| Documentación y organización del informe | 5 / 10 |
-| **Total** | **76 / 100** |
-| **Nota (0–5)** | **3.80** |
+| Documentación y organización del informe | 8 / 10 |
+| **Total** | **80 / 100** |
+| **Nota (0–5)** | **4.00** |
 
 ## 1. Corrección conceptual (21 / 25)
 **Lo que hizo bien:**
-- Distingue bien entre que el algoritmo sea correcto y que sea viable, y nombra la restricción que se incumple: la ventana de cuatro horas.
-- Explica que duplicar la velocidad del servidor no cambia la forma en que crece el trabajo.
-- En la Parte 2 identifica varios perjuicios (paciente, operador, Secretaría, equipo) y dice quién asume cada costo.
-- Reconoce que el orden de la lista decide a quién se llama primero.
+- Distingue entre que el algoritmo sea correcto y que sea viable, y nombra la restricción incumplida: la ventana de cuatro horas.
+- Explica que duplicar la velocidad del servidor no cambia cómo crece el trabajo del algoritmo.
+- En la Parte 2 identifica varios perjuicios (paciente, operador, Secretaría, equipo) e indica quién asume cada costo.
+- Discute que el orden de la lista decide a quién se llama primero y propone controles de validación.
 
 **Lo que puede mejorar:**
-- El segundo ejemplo (inventario de 100.000 equipos) es genérico: falta decir qué restricción exacta se rompe y con qué tiempos.
-- La relación entre tiempo de ejecución y energía quedó corta: faltó una idea cuantitativa, por ejemplo cuántas horas de servidor se acumulan en un año.
-- La tensión del orden de la lista se menciona, pero no se desarrolla la obligación que impone (por ejemplo, validar que el orden sea correcto).
+- En el segundo ejemplo (inventario de 100.000 equipos) usa 1,05 s para 6.400 registros. Su propia gráfica muestra cerca de 2,5 s con datos aleatorios, así que el tiempo estimado (4,3 min) no coincide con sus mediciones.
+- La relación entre tiempo, energía y años de operación está explicada, pero queda general; faltó un dato propio más concreto.
 
 ## 2. Calidad de la explicación teórica (19 / 25)
 **Lo que hizo bien:**
-- Define los tres casos, justifica que usaría el peor caso para decidir y deja escrita la predicción antes de medir.
-- Plantea la recurrencia de merge sort, explica cada término y aplica el método maestro identificando `a`, `b` y `f(n)`.
-- Presenta la tabla de complejidades de insertion sort.
+- Define peor, mejor y caso promedio indicando sobre qué entradas se toma cada uno, y justifica usar el peor caso por la ventana estricta.
+- Deja escrita la predicción antes de medir.
+- Plantea bien la recurrencia de merge sort, explica cada término y la resuelve con el método maestro llegando a `Θ(n log n)`.
+- Incluye la tabla de complejidades por caso.
 
 **Lo que puede mejorar:**
-- La definición del caso promedio no dice sobre qué entradas se promedia (por ejemplo, todas las ordenaciones posibles de `n` datos).
-- El análisis de insertion sort no va línea a línea sobre su código: usa una tabla de operaciones aproximadas y copia de la lista, en vez de contar cada línea real.
-- Falta la complejidad de merge sort en mejor, peor y promedio dentro de la tabla.
-- La verificación del método maestro es muy breve; conviene escribir la comparación y la conclusión con más detalle.
+- Al verificar el método maestro compara con `n^(log₂ b)`; lo correcto es `n^(log_b a)`. Aquí da igual porque a = b = 2, pero la condición debe escribirse bien.
+- El análisis de insertion sort línea a línea no corresponde a su código: usa nombres (`a_copy`) y una condición del ciclo que no son los de su implementación, y no suma el costo de cada línea para llegar al total.
 
-## 3. Corrección de la implementación (15 / 20)
+## 3. Corrección de la implementación (16 / 20)
 **Lo que hizo bien:**
-- `insertion_sort` y `merge_sort` ordenan bien, no cambian la lista recibida, cuentan comparaciones entre elementos y no usan `sorted()` ni `sort()`.
-- Los tres generadores entregan listas del tamaño pedido, sin repetidos, con semilla.
-- Mide el tiempo solo sobre el algoritmo.
+- `insertion_sort` y `merge_sort` ordenan bien, no cambian la lista recibida y cuentan comparaciones entre elementos. No usa `sorted()` ni `sort()`.
+- Merge sort tiene su propia mezcla recursiva.
+- Los generadores dan listas del tamaño pedido, sin repetidos, y con semilla.
 
 **Lo que puede mejorar:**
-- Los generadores y las funciones de `parte3_casos.py` y `parte4_complejidad.py` no tienen docstring, y algunas faltan de anotaciones de tipos.
-- Los docstrings de los algoritmos no siguen el texto pedido (por ejemplo, no dicen que trabajan sobre una copia).
-- Cada tiempo se mide una sola vez; repetir y promediar daría curvas más estables.
+- Algunas líneas pasan de 100 caracteres (en `parte3_casos.py` y sobre todo en `parte4_complejidad.py`).
+- Las descripciones de módulo en `datos.py` y `parte3_casos.py` quedaron después de las importaciones, así que Python no las toma como descripción del archivo.
+- Varias funciones de medición no tienen las secciones `Args` y `Returns` del estilo Google.
+- Está usando `List` de `typing`; se pide la forma `list[int]`.
 
 ## 4. Calidad del análisis de las gráficas (16 / 20)
 **Lo que hizo bien:**
-- Las tres gráficas existen, tienen título, ejes rotulados y leyenda, y se ven en el informe.
-- Identifica con cifras que el inverso es el peor caso, el aleatorio el intermedio y el casi ordenado el mejor.
-- Contrasta bien la conclusión con la complejidad teórica y hace la extrapolación a 1.200.000 registros declarándola como estimación.
+- Las tres gráficas existen, con título, ejes rotulados y leyenda, y las curvas comparten ejes.
+- Identifica con cifras que el escenario inverso es el peor, el casi ordenado el mejor y el aleatorio el intermedio, y lo contrasta con su predicción.
+- Concluye que merge sort es mejor y lo apoya en sus tiempos (2,52 s frente a 0,029 s en n = 6400).
+- Extrapola a 1.200.000 registros declarando que es una estimación, y responde a la propuesta del servidor con un dato medido.
 
 **Lo que puede mejorar:**
-- El informe dice que a tamaños pequeños la diferencia es menor, pero no lo comprueba en su gráfica.
-- El concepto técnico no cita la gráfica ni el tamaño de entrada del que sale el dato, y la justificación de elegir una sola implementación es breve.
+- Menciona que con tamaños pequeños la diferencia puede ser reducida, pero no lo explica con lo que muestra su gráfica.
+- Dice que el tiempo estimado "puede superar" las cuatro horas; con su cálculo (unas 24,6 horas) puede afirmarlo directamente.
+- Se habla de la memoria extra de merge sort, pero no se mide ni se estima.
 
-## 5. Documentación y organización del informe (5 / 10)
+## 5. Documentación y organización del informe (8 / 10)
 **Lo que hizo bien:**
-- La carpeta del laboratorio está en la ubicación acordada y tiene todos los archivos pedidos.
-- Las gráficas se incrustan bien, cada parte enlaza su código y hay instrucciones de reproducción.
+- La carpeta del laboratorio está en una ubicación válida y tiene todos los archivos pedidos.
+- El informe está dividido por partes, con las gráficas visibles y enlaces al código en cada parte.
+- Tiene instrucciones de reproducción y varios commits descriptivos.
 
 **Lo que puede mejorar:**
-- Todo el laboratorio se subió en un solo commit; se pedían al menos cinco commits descriptivos que muestren el avance.
-- Las instrucciones de activación del entorno sirven solo para Windows.
-- El informe pone "Wilmar Fonseca" y no el nombre completo.
+- Los enlaces de texto a `parte4_tiempo.png` en 4.2 y 4.3 usan una ruta que no funciona desde el informe; deben ser relativos a su carpeta (`graficas/parte4_tiempo.png`).
+- Las instrucciones de activación del entorno no indican cómo instalar `matplotlib` (por ejemplo desde `requirements.txt`).
 
 ## ¿El código funciona?
-Sí. Los scripts corren sin errores, ordenan correctamente los tres escenarios y generan las tres gráficas.
+Sí. Los dos algoritmos ordenan bien listas pequeñas, aleatorias y de los tres escenarios, y el experimento corre y genera las gráficas.
 
 ## Para el próximo laboratorio
-- Haga commits pequeños y frecuentes mientras avanza, con mensajes que digan qué cambió.
-- Escriba docstring y tipos en todas las funciones, también en los generadores y los scripts de medición.
-- Analice insertion sort línea por línea sobre su propio código e incluya merge sort en la tabla de complejidades.
-- Dé datos concretos en los ejemplos propios (qué se procesa, cuántos datos, qué límite de tiempo) y cite la gráfica que respalda cada afirmación.
+- Revise que las cifras de un ejemplo vengan de sus mediciones publicadas.
+- Haga el análisis línea a línea sobre su propio código, sumando el costo de cada línea.
+- Cuide el estilo PEP 8: líneas cortas, descripciones de módulo al inicio y `Args`/`Returns` en cada función.
+- Compruebe que los enlaces del informe abren el archivo desde su carpeta.
+- Explique con sus gráficas lo que pasa con tamaños pequeños.
