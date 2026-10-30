@@ -60,7 +60,7 @@ Excelente trabajo: un laboratorio completo, ordenado y bien sustentado.
 - Instrucciones de reproducción claras y varios commits descriptivos.
 
 ## ¿El código funciona?
-Sí. Las pruebas pasan, la medición corre sin errores y genera las gráficas. En mi ejecución los factores de crecimiento fueron más cercanos a la teoría que los de su tabla.
+Sí. Las pruebas pasan, la medición corre sin errores y genera las gráficas. Al ejecutar la medición, los factores de crecimiento resultaron más cercanos a la teoría que los de su tabla.
 
 ## Para el próximo laboratorio
 - Repita las mediciones más veces y use la mediana para que los tiempos pequeños sean más estables.
